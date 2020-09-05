@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomArticleGenerator", "RandomArticleGenerator\RandomArticleGenerator.csproj", "{FD869D12-1C46-4C36-855D-2EBF57E2664C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreUnitTests", "CoreUnitTests\CoreUnitTests.csproj", "{C880BDD2-95FD-4829-B967-FF78B7B520FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD869D12-1C46-4C36-855D-2EBF57E2664C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD869D12-1C46-4C36-855D-2EBF57E2664C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD869D12-1C46-4C36-855D-2EBF57E2664C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD869D12-1C46-4C36-855D-2EBF57E2664C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C880BDD2-95FD-4829-B967-FF78B7B520FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C880BDD2-95FD-4829-B967-FF78B7B520FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C880BDD2-95FD-4829-B967-FF78B7B520FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C880BDD2-95FD-4829-B967-FF78B7B520FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {95DF6752-2D4C-4401-9364-B980ACD68911}
+	EndGlobalSection
+EndGlobal
