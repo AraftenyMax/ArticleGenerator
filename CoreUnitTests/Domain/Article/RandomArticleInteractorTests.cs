@@ -1,5 +1,4 @@
-﻿using RandomArticleGenerator.Domain.Article;
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
 using RandomArticleGenerator.Domain.Template;
 using RandomArticleGenerator.Gateways.Article;

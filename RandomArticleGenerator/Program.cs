@@ -1,4 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using RandomArticleGenerator.Adapters.HttpAdapter;
+using RandomArticleGenerator.Adapters.JsonAdapter;
+using RandomArticleGenerator.Adapters.OuterGatewayAdapter;
 using RandomArticleGenerator.Gateways.Article;
 using RandomArticleGenerator.Gateways.Image;
 using RandomArticleGenerator.Gateways.News;
@@ -17,10 +20,13 @@ namespace RandomArticleGenerator
             var services = new ServiceCollection();
             services.AddSingleton<IArticleGateway, ArticleGateway>();
             services.AddSingleton<ImageGateway, RandomImageGateway>();
-            services.AddSingleton<NewsGateway, NewsApiGateway>();
-            services.AddSingleton<QuotesGateway, QuotableGateway>();
-            services.AddSingleton<SpaceshipsGateway, SpaceXShipsGateway>();
-            services.AddSingleton<WeatherGateway, OpenWeatherGateway>();
+            services.AddSingleton<INewsGateway, NewsApiGateway>();
+            services.AddSingleton<IQuotesGateway, QuotableGateway>();
+            services.AddSingleton<ISpaceshipsGateway, SpaceXShipsGateway>();
+            services.AddSingleton<IWeatherGateway, OpenWeatherGateway>();
+            services.AddSingleton<IDatatypeSerializer, JsonSerializer>();
+            services.AddSingleton<IResourceResolver, ResourceResolverAdapter>();
+            services.AddSingleton<IRequestAgent, HttpAdapter>();
             _serviceProvider = services.BuildServiceProvider(true);
         }
         static void Main(string[] args)
