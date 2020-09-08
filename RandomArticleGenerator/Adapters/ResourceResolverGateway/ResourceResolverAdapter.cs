@@ -3,10 +3,11 @@ using RandomArticleGenerator.Adapters.JsonAdapter;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RandomArticleGenerator.Adapters.OuterGatewayAdapter
 {
-    class ResourceResolverAdapter : IResourceResolver
+    public class ResourceResolverAdapter : IResourceResolver
     {
         private IRequestAgent agent;
         private IDatatypeSerializer serializer;
@@ -17,9 +18,11 @@ namespace RandomArticleGenerator.Adapters.OuterGatewayAdapter
             serializer = datatypeSerializer;
         }
 
-        public T RetrieveData<T>(string path)
+        public async Task<T> RetrieveData<T>(string path)
         {
-            throw new NotImplementedException();
+            string rawData = await agent.Get(path);
+            T data = serializer.Deserialize<T>(rawData);
+            return data;
         }
     }
 }

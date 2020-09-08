@@ -4,8 +4,8 @@ using System.Text;
 
 namespace RandomArticleGenerator.Adapters.JsonAdapter
 {
-    interface IDatatypeSerializer
+    public interface IDatatypeSerializer
     {
-        public T deserialize<T>(string rawData);
+        public T Deserialize<T>(string rawData);
     }
 }

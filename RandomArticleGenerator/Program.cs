@@ -24,7 +24,7 @@ namespace RandomArticleGenerator
             services.AddSingleton<IQuotesGateway, QuotableGateway>();
             services.AddSingleton<ISpaceshipsGateway, SpaceXShipsGateway>();
             services.AddSingleton<IWeatherGateway, OpenWeatherGateway>();
-            services.AddSingleton<IDatatypeSerializer, JsonSerializer>();
+            services.AddSingleton<IDatatypeSerializer, JsonAppSerializer>();
             services.AddSingleton<IResourceResolver, ResourceResolverAdapter>();
             services.AddSingleton<IRequestAgent, HttpAdapter>();
             _serviceProvider = services.BuildServiceProvider(true);

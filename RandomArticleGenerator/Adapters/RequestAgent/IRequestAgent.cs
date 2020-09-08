@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RandomArticleGenerator.Adapters.HttpAdapter
 {
-    interface IRequestAgent
+    public interface IRequestAgent
     {
-        public string get(string url);
+        public Task<string> Get(string url);
     }
 }
