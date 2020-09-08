@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RandomArticleGenerator.Gateways.Spaceships
 {
     public interface ISpaceshipsGateway
     {
-        SpaceshipEntity GetSpaceship(int shipId);
-        SpaceshipEntity GetRandomSpaceship();
+        Task<SpaceshipEntity> GetSpaceship(int shipId);
+        Task<SpaceshipEntity> GetRandomSpaceship();
     }
 }

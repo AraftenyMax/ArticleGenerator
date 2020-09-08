@@ -1,14 +1,29 @@
-﻿using RandomArticleGenerator.Domain.Quote;
-using System;
+﻿using RandomArticleGenerator.Adapters.OuterGatewayAdapter;
+using RandomArticleGenerator.Domain.Quote;
+using System.Threading.Tasks;
 
 namespace RandomArticleGenerator.Gateways.Quote
 {
-    class QuotableGateway : IQuotesGateway
+    public class QuotableGateway : IQuotesGateway
     {
+        private readonly IResourceResolver _resourceResolver;
         public readonly string ApiUrl = "api.quotable.io";
-        public QuoteEntity GetQuote()
+
+        public QuotableGateway(IResourceResolver resourceResolver)
         {
-            throw new NotImplementedException();
+            _resourceResolver = resourceResolver;
+        }
+
+        private string GetApiUrl()
+        {
+            return $"{ApiUrl}/random";
+        }
+
+        public async Task<QuoteEntity> GetQuote()
+        {
+            string apiUrl = GetApiUrl();
+            QuoteEntity quote = await _resourceResolver.RetrieveData<QuoteEntity>(apiUrl);
+            return quote;
         }
     }
 }

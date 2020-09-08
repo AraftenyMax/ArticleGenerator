@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RandomArticleGenerator.Gateways.Weather
 {
     public interface IWeatherGateway
     {
-        WeatherEntity GetWeather(string city);
-        WeatherEntity GetWeatherForRandomCity();
+        Task<WeatherEntity> GetWeather(string city);
+        Task<WeatherEntity> GetWeatherForRandomCity();
     }
 }

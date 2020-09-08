@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RandomArticleGenerator.Gateways.Quote
 {
     public interface IQuotesGateway
     {
-        QuoteEntity GetQuote();
+        Task<QuoteEntity> GetQuote();
     }
 }

@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RandomArticleGenerator.Gateways.News
 {
     public interface INewsGateway
     {
-        NewsEntity GetNews(NewsSelectionCriteria criteria);
-        NewsEntity GetRandomNews();
+        Task<NewsEntity> GetNews(NewsSelectionCriteria criteria);
+        Task<NewsEntity> GetRandomNews();
     }
 }

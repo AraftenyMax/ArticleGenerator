@@ -1,17 +1,18 @@
 ﻿using RandomArticleGenerator.Domain.Weather;
 using System;
+using System.Threading.Tasks;
 
 namespace RandomArticleGenerator.Gateways.Weather
 {
-    class OpenWeatherGateway : IWeatherGateway
+    public class OpenWeatherGateway : IWeatherGateway
     {
 
-        public WeatherEntity GetWeather(string city)
+        public async Task<WeatherEntity> GetWeather(string city)
         {
             throw new NotImplementedException();
         }
 
-        public WeatherEntity GetWeatherForRandomCity()
+        public async Task<WeatherEntity> GetWeatherForRandomCity()
         {
             throw new NotImplementedException();
         }

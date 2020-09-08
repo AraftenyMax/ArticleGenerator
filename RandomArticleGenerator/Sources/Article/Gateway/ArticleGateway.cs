@@ -9,6 +9,7 @@ using RandomArticleGenerator.Gateways.News;
 using RandomArticleGenerator.Gateways.Quote;
 using RandomArticleGenerator.Gateways.Spaceships;
 using RandomArticleGenerator.Gateways.Weather;
+using System.Threading.Tasks;
 
 namespace RandomArticleGenerator.Gateways.Article
 {
@@ -34,43 +35,47 @@ namespace RandomArticleGenerator.Gateways.Article
         public ArticleEntity GetArticle()
         {
             ArticleEntity article = new ArticleEntity();
-            GetImage(article);
-            GetWeather(article);
-            GetQuote(article);
-            GetNews(article);
-            GetQuote(article);
-            GetSpaceship(article);
             return article;
         }
 
-        private void GetImage(ArticleEntity article)
+        private async ArticleEntity GetRequiredData()
+        {
+            Task<ImageEntity> imageTask = GetImage();
+            Task<WeatherEntity> weatherTask = GetWeather();
+            Task<NewsEntity> newsEntity = GetNews();
+            Task<QuoteEntity> quoteEntity = GetQuote();
+            Task<SpaceshipEntity> spaceshipEntity = GetSpaceship();
+            
+        }
+
+        private async Task<ImageEntity> GetImage()
         {
             ImageEntity image = ImageGateway.GetImage();
-            article.Image = image;
+            return image;
         }
 
-        private void GetWeather(ArticleEntity article)
+        private async Task<WeatherEntity> GetWeather()
         {
-            WeatherEntity weather = WeatherGateway.GetWeatherForRandomCity();
-            article.Weather = weather;
+            WeatherEntity weather = await WeatherGateway.GetWeatherForRandomCity();
+            return weather;
         }
 
-        private void GetNews(ArticleEntity article)
+        private async Task<NewsEntity> GetNews()
         {
             NewsEntity news = NewsGateway.GetRandomNews();
-            article.News = news;
+            return news;
         }
 
-        private void GetQuote(ArticleEntity article)
+        private async Task<QuoteEntity> GetQuote()
         {
-            QuoteEntity quote = QuotesGateway.GetQuote();
-            article.Quote = quote;
+            QuoteEntity quote = await QuotesGateway.GetQuote();
+            return quote;
         }
 
-        private void GetSpaceship(ArticleEntity article)
+        private async Task<SpaceshipEntity> GetSpaceship()
         {
             SpaceshipEntity spaceship = SpaceshipsGateway.GetRandomSpaceship();
-            article.Spaceship = spaceship;
+            return spaceship;
         }
     }
 }

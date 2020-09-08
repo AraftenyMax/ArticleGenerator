@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RandomArticleGenerator.Adapters.OuterGatewayAdapter
 {
-    interface IResourceResolver
+    public interface IResourceResolver
     {
         public Task<T> RetrieveData<T>(string path);
     }
