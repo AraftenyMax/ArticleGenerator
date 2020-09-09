@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RandomArticleGenerator.Gateways.Image
 {
-    public interface ImageGateway
+    public interface IImageGateway
     {
         Task<ImageEntity> GetImage();
     }

@@ -7,6 +7,9 @@ using RandomArticleGenerator.Gateways.News;
 using RandomArticleGenerator.Gateways.Quote;
 using RandomArticleGenerator.Gateways.Spaceships;
 using RandomArticleGenerator.Gateways.Weather;
+using System;
+using System.IO;
+using System.Runtime.InteropServices;
 
 namespace CoreUnitTests.Gateways.Article
 {
@@ -15,7 +18,7 @@ namespace CoreUnitTests.Gateways.Article
         TestDataProvider TestDataProvider = new TestDataProvider();
         IArticleGateway articleGateway;
         Mock<IWeatherGateway> weatherGatewayMock;
-        Mock<ImageGateway> imageGatewayMock;
+        Mock<IImageGateway> imageGatewayMock;
         Mock<INewsGateway> newsGatewayMock;
         Mock<IQuotesGateway> quoteGatewayMock;
         Mock<ISpaceshipsGateway> spaceShipsGatewayMock;
@@ -24,21 +27,21 @@ namespace CoreUnitTests.Gateways.Article
         public void SetUp()
         {
             weatherGatewayMock = new Mock<IWeatherGateway>();
-            imageGatewayMock = new Mock<ImageGateway>();
+            imageGatewayMock = new Mock<IImageGateway>();
             newsGatewayMock = new Mock<INewsGateway>();
             quoteGatewayMock = new Mock<IQuotesGateway>();
             spaceShipsGatewayMock = new Mock<ISpaceshipsGateway>();
 
             weatherGatewayMock.Setup(mock => mock.GetWeatherForRandomCity())
-                .Returns(TestDataProvider.GetWeatherEntity());
+                .ReturnsAsync(TestDataProvider.GetWeatherEntity());
             imageGatewayMock.Setup(mock => mock.GetImage())
-                .Returns(TestDataProvider.GetImageEntity());
+                .ReturnsAsync(TestDataProvider.GetImageEntity());
             newsGatewayMock.Setup(mock => mock.GetRandomNews())
-                .Returns(TestDataProvider.GetNewsEntity());
+                .ReturnsAsync(TestDataProvider.GetNewsEntity());
             quoteGatewayMock.Setup(mock => mock.GetQuote())
-                .Returns(TestDataProvider.GetQuoteEntity());
+                .ReturnsAsync(TestDataProvider.GetQuoteEntity());
             spaceShipsGatewayMock.Setup(mock => mock.GetRandomSpaceship())
-                .Returns(TestDataProvider.GetSpaceshipEntity());
+                .ReturnsAsync(TestDataProvider.GetSpaceshipEntity());
 
             articleGateway = new ArticleGateway(imageGatewayMock.Object, newsGatewayMock.Object,
                 quoteGatewayMock.Object, spaceShipsGatewayMock.Object, weatherGatewayMock.Object);
@@ -50,6 +53,14 @@ namespace CoreUnitTests.Gateways.Article
             ArticleEntity actualArticle = articleGateway.GetArticle();
             ArticleEntity expectedArticle = TestDataProvider.CreateTestArticle();
             Assert.AreEqual(expectedArticle, actualArticle);
+        }
+
+        [Test]
+        public void ThrowsExceptionOnQuoteFetchFailure()
+        {
+            quoteGatewayMock.Setup(mock => mock.GetQuote()).ThrowsAsync(new AggregateException());
+            TestDelegate testDelegate = () => articleGateway.GetArticle();
+            Assert.Throws<AggregateException>(testDelegate);
         }
     }
 }

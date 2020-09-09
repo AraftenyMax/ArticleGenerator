@@ -15,13 +15,13 @@ namespace RandomArticleGenerator.Gateways.Article
 {
     public class ArticleGateway : IArticleGateway
     {
-        private ImageGateway ImageGateway;
+        private IImageGateway ImageGateway;
         private INewsGateway NewsGateway;
         private IQuotesGateway QuotesGateway;
         private ISpaceshipsGateway SpaceshipsGateway;
         private IWeatherGateway WeatherGateway;
 
-        public ArticleGateway(ImageGateway imageGateway,
+        public ArticleGateway(IImageGateway imageGateway,
             INewsGateway newsGateway, IQuotesGateway quotesGateway,
             ISpaceshipsGateway spaceshipsGateway, IWeatherGateway weatherGateway)
         {
@@ -35,47 +35,50 @@ namespace RandomArticleGenerator.Gateways.Article
         public ArticleEntity GetArticle()
         {
             ArticleEntity article = new ArticleEntity();
+            GetRequiredData(article);
             return article;
         }
 
-        private async ArticleEntity GetRequiredData()
+        private ArticleEntity GetRequiredData(ArticleEntity article)
         {
-            Task<ImageEntity> imageTask = GetImage();
-            Task<WeatherEntity> weatherTask = GetWeather();
-            Task<NewsEntity> newsEntity = GetNews();
-            Task<QuoteEntity> quoteEntity = GetQuote();
-            Task<SpaceshipEntity> spaceshipEntity = GetSpaceship();
-            
+            Task imageTask = GetImage(article);
+            Task weatherTask = GetWeather(article);
+            Task newsTask = GetNews(article);
+            Task quoteTask = GetQuote(article);
+            Task spaceshipTask = GetSpaceship(article);
+            Task[] awaitedTasks = new Task [] { imageTask, weatherTask, newsTask, quoteTask, spaceshipTask };
+            Task.WaitAll(awaitedTasks);
+            return article;
         }
 
-        private async Task<ImageEntity> GetImage()
+        private async Task GetImage(ArticleEntity article)
         {
-            ImageEntity image = ImageGateway.GetImage();
-            return image;
+            ImageEntity image = await ImageGateway.GetImage();
+            article.Image = image;
         }
 
-        private async Task<WeatherEntity> GetWeather()
+        private async Task GetWeather(ArticleEntity article)
         {
             WeatherEntity weather = await WeatherGateway.GetWeatherForRandomCity();
-            return weather;
+            article.Weather = weather;
         }
 
-        private async Task<NewsEntity> GetNews()
+        private async Task GetNews(ArticleEntity article)
         {
-            NewsEntity news = NewsGateway.GetRandomNews();
-            return news;
+            NewsEntity news = await NewsGateway.GetRandomNews();
+            article.News = news;
         }
 
-        private async Task<QuoteEntity> GetQuote()
+        private async Task GetQuote(ArticleEntity article)
         {
             QuoteEntity quote = await QuotesGateway.GetQuote();
-            return quote;
+            article.Quote = quote;
         }
 
-        private async Task<SpaceshipEntity> GetSpaceship()
+        private async Task GetSpaceship(ArticleEntity article)
         {
-            SpaceshipEntity spaceship = SpaceshipsGateway.GetRandomSpaceship();
-            return spaceship;
+            SpaceshipEntity spaceship = await SpaceshipsGateway.GetRandomSpaceship();
+            article.Spaceship = spaceship;
         }
     }
 }

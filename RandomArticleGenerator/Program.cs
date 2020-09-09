@@ -19,7 +19,7 @@ namespace RandomArticleGenerator
         {
             var services = new ServiceCollection();
             services.AddSingleton<IArticleGateway, ArticleGateway>();
-            services.AddSingleton<ImageGateway, RandomImageGateway>();
+            services.AddSingleton<IImageGateway, RandomImageGateway>();
             services.AddSingleton<INewsGateway, NewsApiGateway>();
             services.AddSingleton<IQuotesGateway, QuotableGateway>();
             services.AddSingleton<ISpaceshipsGateway, SpaceXShipsGateway>();
